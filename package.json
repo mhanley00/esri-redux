@@ -1,7 +1,7 @@
 {
-  "name": "esri-redux",
+  "name": "esri-react",
   "version": "1.0.0",
-  "description": "Simple boilerplate demonstrating how to setup a project using React, Redux, Flow, and the Esri JavaScript API.",
+  "description": "Simple boilerplate demonstrating how to setup a project using React, Flow, and the Esri JavaScript API.",
   "main": "scripts/start.js",
   "scripts": {
     "start": "node scripts/start",
@@ -13,7 +13,6 @@
     "hot",
     "esri",
     "react",
-    "redux",
     "Caddy",
     "https",
     "http2",
@@ -48,7 +47,6 @@
     "core-js": "^2.5.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "redux": "^3.7.2",
     "webpack": "^3.6.0"
   },
   "devDependencies": {

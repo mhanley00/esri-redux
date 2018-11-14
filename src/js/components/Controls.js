@@ -1,6 +1,4 @@
-import { toggleShareModal, toggleLocateModal } from 'js/actions/mapActions';
 import React, { Component } from 'react';
-import appStore from 'js/appStore';
 
 const ANIMATION_OPTIONS = { duration: 300 };
 const ZOOM_OUT_MARKUP = '<use xlink:href="#icon-zoom-out" />',
@@ -26,11 +24,11 @@ export default class Controls extends Component {
   };
 
   locate = () => {
-    appStore.dispatch(toggleLocateModal({ visible: true }));
+    this.props.toggleLocateModal();
   };
 
   share = () => {
-    appStore.dispatch(toggleShareModal({ visible: true }));
+    this.props.toggleShareModal();
   };
 
   render () {

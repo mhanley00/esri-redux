@@ -1,13 +1,11 @@
-import { toggleLocateModal } from 'js/actions/mapActions';
 import Wrapper from 'js/components/modals/Wrapper';
 import React, { Component } from 'react';
-import appStore from 'js/appStore';
 
 export default class LocateModal extends Component {
   displayName: 'LocateModal';
 
   close = () => {
-    appStore.dispatch(toggleLocateModal({ visible: false }));
+    this.props.toggleLocateModal();
   };
 
   render () {

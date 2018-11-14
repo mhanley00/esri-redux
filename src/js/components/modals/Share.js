@@ -1,13 +1,11 @@
-import { toggleShareModal } from 'js/actions/mapActions';
 import Wrapper from 'js/components/modals/Wrapper';
 import React, { Component } from 'react';
-import appStore from 'js/appStore';
 
 export default class ShareModal extends Component {
   displayName: 'ShareModal';
 
   close = () => {
-    appStore.dispatch(toggleShareModal({ visible: false }));
+    this.props.toggleShareModal();
   };
 
   render () {

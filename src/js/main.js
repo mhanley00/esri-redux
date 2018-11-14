@@ -21,8 +21,6 @@ loadCSS('//js.arcgis.com/4.5/esri/css/main.css');
 let mount = document.getElementById('react-mount');
 Dom.render(<App />, mount);
 
-// Enable HMR for development mode, Only use this is you are using Redux or something
-// similar for state management, this will effectively reload the whole page
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('js/components/App', () => {
     let HotApp = require('js/components/App').default;

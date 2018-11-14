@@ -1,4 +1,3 @@
-import { viewCreated, getItemInfo } from 'js/actions/mapActions';
 import { MAP_OPTIONS, VIEW_OPTIONS } from 'js/config';
 import LocateModal from 'js/components/modals/Locate';
 import ShareModal from 'js/components/modals/Share';
@@ -6,18 +5,22 @@ import Spinner from 'js/components/shared/Spinner';
 import Controls from 'js/components/Controls';
 import MapView from 'esri/views/MapView';
 import React, { Component } from 'react';
-import appStore from 'js/appStore';
 import EsriMap from 'esri/Map';
 
 export default class Map extends Component {
   displayName: 'Map';
-  state = appStore.getState();
-  view = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+      shareModalVisible: false,
+      locateModalVisible: false,
+      view: {}
+    };
+  }
 
   componentDidMount() {
-    // Subscribe to the store for updates
-    this.unsubscribe = appStore.subscribe(this.storeDidUpdate);
-
     const map = new EsriMap(MAP_OPTIONS);
 
     // Create our map view
@@ -28,30 +31,29 @@ export default class Map extends Component {
     });
 
     promise.then(view => {
-      this.view = view;
-      appStore.dispatch(viewCreated());
-      //- Webmap from https://developers.arcgis.com/javascript/latest/api-reference/esri-WebMap.html
-      // appStore.dispatch(getItemInfo('e691172598f04ea8881cd2a4adaa45ba'));
+      this.setState({
+        view: view
+      });
     });
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
+  toggleLocateModal = () => {
+    this.setState({locateModalVisible: !this.state.locateModalVisible});
   }
 
-  storeDidUpdate = () => {
-    this.setState(appStore.getState());
-  };
+  toggleShareModal = () => {
+    this.setState({shareModalVisible: !this.state.shareModalVisible});
+  }
 
   render () {
-    const {shareModalVisible, locateModalVisible} = this.state;
+    const {shareModalVisible, locateModalVisible, view} = this.state;
 
     return (
       <div ref='mapView' className='map-view'>
-        <Controls view={this.view} />
-        <Spinner active={!this.view.ready} />
-        <ShareModal visible={shareModalVisible} />
-        <LocateModal visible={locateModalVisible} />
+        <ShareModal visible={shareModalVisible} toggleShareModal={this.toggleShareModal} />
+        <LocateModal visible={locateModalVisible} toggleLocateModal={this.toggleLocateModal} />
+        <Controls view={view} toggleShareModal={this.toggleShareModal} toggleLocateModal={this.toggleLocateModal} />
+        <Spinner active={!view.ready} />
       </div>
     );
   }
