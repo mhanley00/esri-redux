@@ -13,7 +13,7 @@ import 'css/critical.scss';
 import 'css/app.scss';
 
 //- Lazy load esri css
-loadCSS('//js.arcgis.com/4.5/esri/css/main.css');
+loadCSS('//js.arcgis.com/4.9/esri/css/main.css');
 
 // Apply any default configurations here if necessary
 

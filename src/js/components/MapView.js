@@ -34,7 +34,10 @@ export default class Map extends Component {
       this.setState({
         view: view
       });
+
     });
+    // Now that we have created our Map and Mapview, here is where we would add some layers!
+    // see https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=layers-featurelayer for an example!
   }
 
   toggleLocateModal = () => {
