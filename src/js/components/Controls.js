@@ -9,6 +9,37 @@ const ZOOM_OUT_MARKUP = '<use xlink:href="#icon-zoom-out" />',
 export default class Controls extends Component {
   displayName: 'Controls';
 
+  constructor() {
+    super()
+
+    this.state = {
+      latitude: '',
+      longitude: '',
+    }
+
+    this.getMyLocation = this.getMyLocation.bind(this)
+  }
+  //Calling HTML5 geolocation after componentDidMount b/c can't call setState on unmounted component, leaking default lat/long
+  componentDidMount() {
+    this.getMyLocation()
+  }
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation
+    
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+
+  }
+
   zoomIn = () => {
     const {view} = this.props;
     if (view) {
@@ -24,8 +55,12 @@ export default class Controls extends Component {
   };
 
   locate = () => {
-    this.props.toggleLocateModal();
-    //add html5 geolocation here
+    // this.props.toggleLocateModal();
+    const {view} = this.props;
+    if (view) {
+      // view.goTo({ center: [-80.0369, 38.9072] }, ANIMATION_OPTIONS);
+      view.goTo({ center: [this.state.longitude, this.state.latitude], zoom: 14 }, ANIMATION_OPTIONS);
+    }
   };
 
   share = () => {

@@ -16,7 +16,9 @@ export default class Map extends Component {
       counter: 0,
       shareModalVisible: false,
       locateModalVisible: false,
-      view: {}
+      view: {},
+      latitude: '',
+      longitude: ''
     };
   }
 
@@ -39,6 +41,10 @@ export default class Map extends Component {
     // Now that we have created our Map and Mapview, here is where we would add some layers!
     // see https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=layers-featurelayer for an example!
   }
+
+
+
+
 
   toggleLocateModal = () => {
     this.setState({locateModalVisible: !this.state.locateModalVisible});

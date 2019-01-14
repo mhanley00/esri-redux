@@ -13,7 +13,7 @@ export default class LocateModal extends Component {
 
     return (
       <Wrapper theme='locate-modal' visible={visible} close={this.close}>
-        <h3>Locate Something</h3>
+        <h3>Find a trail</h3>
       </Wrapper>
     );
   }

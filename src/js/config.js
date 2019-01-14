@@ -7,7 +7,7 @@ export const INITIAL_STATE = {
 
 export const TEXT = {
   title: 'Trail Finder',
-  subtitle: 'Find the best running routes in the District'
+  subtitle: 'Search the best running routes in the District'
 };
 
 export const MAP_OPTIONS = {
