@@ -25,6 +25,7 @@ export default class Controls extends Component {
 
   locate = () => {
     this.props.toggleLocateModal();
+    //add html5 geolocation here
   };
 
   share = () => {
@@ -52,7 +53,7 @@ export default class Controls extends Component {
           <li className='map-controls__item pointer' onClick={this.share}>
             <svg
               role='img'
-              aria-label='Share your experience'
+              aria-label='Share a route'
               className='map-controls__item-icon'
               dangerouslySetInnerHTML={{ __html: SHARE_MARKUP }} />
           </li>

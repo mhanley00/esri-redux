@@ -13,7 +13,8 @@ export default class ShareModal extends Component {
 
     return (
       <Wrapper theme='share-modal' visible={visible} close={this.close}>
-        <h3>Share Something</h3>
+        <h3>Share a Route</h3>
+        {/* could add links to routes as props... */}
       </Wrapper>
     );
   }
