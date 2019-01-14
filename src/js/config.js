@@ -6,12 +6,13 @@ export const INITIAL_STATE = {
 };
 
 export const TEXT = {
-  title: 'Esri Example',
-  subtitle: 'Example with React, Esri, Sass, and more.'
+  title: 'Trail Finder',
+  subtitle: 'Find the best running routes in the District'
 };
 
 export const MAP_OPTIONS = {
-  basemap: 'streets-vector'
+  // basemap: 'streets-vector'
+  basemap: 'gray-vector'
 };
 
 export const VIEW_OPTIONS = {
