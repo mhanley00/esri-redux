@@ -8,7 +8,7 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 import React, { Component } from 'react';
 import EsriMap from 'esri/Map';
 import arlingtonLoop from '../arlingtonLoop.json';
-import Popup from 'esri/widgets/Popup';
+import geometryEngine from 'esri/geometry/geometryEngine';
 
 export default class Map extends Component {
   displayName: 'Map';
@@ -61,11 +61,15 @@ export default class Map extends Component {
     // });
 
     // map.add(featureLayer);
-
+    const measureThisAction = {
+      title: "Measure Length",
+      id: "measure-this",
+      // image: "Measure_Distance16.png"
+    };
     const template = { // autocasts as new PopupTemplate()
       title: "DC Crime Data",
       content: "{name}",
-      // actions: [measureThisAction]
+      actions: [measureThisAction]
     };
 
     const featureLayer = new FeatureLayer({
@@ -75,6 +79,21 @@ export default class Map extends Component {
       definitionExpression: this.state.props,
       outFields: ["*"],
       popupTemplate: template
+    });
+
+    function measureThis() {
+      let geom = view.popup.selectedFeature.geometry;
+      let distance = geometryEngine.geodesicLength(geom, "miles");
+      distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
+      view.popup.content = view.popup.selectedFeature.attributes.name +
+        "<div style='background-color:DarkGray;color:white'>" + distance +
+        " miles.</div>";
+    }
+    promise.popup.on("trigger-action", function(event) {
+      // Execute the measureThis() function if the measure-this action is clicked
+      if (event.action.id === "measure-this") {
+        measureThis();
+      }
     });
 
     map.add(featureLayer);
