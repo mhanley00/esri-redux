@@ -4,6 +4,7 @@ import ShareModal from 'js/components/modals/Share';
 import Spinner from 'js/components/shared/Spinner';
 import Controls from 'js/components/Controls';
 import MapView from 'esri/views/MapView';
+import FeatureLayer from 'esri/layers/FeatureLayer';
 import React, { Component } from 'react';
 import EsriMap from 'esri/Map';
 
@@ -40,6 +41,29 @@ export default class Map extends Component {
     });
     // Now that we have created our Map and Mapview, here is where we would add some layers!
     // see https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=layers-featurelayer for an example!
+
+  // const arlingtonloop = new FeatureLayer ({
+  //     portalItem: {
+  //       id: "1a08d221e31843a093267ae8ed005f23"
+  //     }
+  //   });
+  //   // arlingtonloop.then(function(arlingtonloop){
+  //   map.add(arlingtonloop);
+  //   // });
+
+//THIS WORKS BUT NOT SURE HOW TO GET DATA IN HERE
+    // const featureLayer = new FeatureLayer({
+    //   url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+    // });
+
+    // map.add(featureLayer);
+    const featureLayer = new FeatureLayer({
+      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/DC_Crime_2011/FeatureServer"
+      //ArcGIS REST Services Directory: https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services
+    });
+
+    map.add(featureLayer);
+
   }
 
 
