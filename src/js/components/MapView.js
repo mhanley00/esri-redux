@@ -8,6 +8,7 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 import React, { Component } from 'react';
 import EsriMap from 'esri/Map';
 import arlingtonLoop from '../arlingtonLoop.json';
+import Popup from 'esri/widgets/Popup';
 
 export default class Map extends Component {
   displayName: 'Map';
@@ -20,7 +21,8 @@ export default class Map extends Component {
       locateModalVisible: false,
       view: {},
       latitude: '',
-      longitude: ''
+      longitude: '',
+      definitionExpression: "offence:''"
     };
     
   }
@@ -59,9 +61,20 @@ export default class Map extends Component {
     // });
 
     // map.add(featureLayer);
+
+    const template = { // autocasts as new PopupTemplate()
+      title: "DC Crime Data",
+      content: "{name}",
+      // actions: [measureThisAction]
+    };
+
     const featureLayer = new FeatureLayer({
-      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/DC_Crime_2011/FeatureServer"
+      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/DC_Crime_2011/FeatureServer",
       //ArcGIS REST Services Directory: https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services
+      // definitionExpression: `offence:${this.state.props}` // dots do not show up when defEx is like this
+      definitionExpression: this.state.props,
+      outFields: ["*"],
+      popupTemplate: template
     });
 
     map.add(featureLayer);
@@ -73,7 +86,7 @@ export default class Map extends Component {
       outline:
     {
       color: [152,230,0,255],
-      width: 1
+      width: 5
     }
       // popupTemplate: {
       //   title: "{features.properties.name}",
