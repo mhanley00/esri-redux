@@ -7,6 +7,7 @@ import MapView from 'esri/views/MapView';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import React, { Component } from 'react';
 import EsriMap from 'esri/Map';
+import arlingtonLoop from '../arlingtonLoop.json';
 
 export default class Map extends Component {
   displayName: 'Map';
@@ -21,6 +22,7 @@ export default class Map extends Component {
       latitude: '',
       longitude: ''
     };
+    
   }
 
   componentDidMount() {
@@ -63,6 +65,35 @@ export default class Map extends Component {
     });
 
     map.add(featureLayer);
+
+    const runningLayer = new FeatureLayer({
+      url: '../arlingtonLoop.json',
+      data: arlingtonLoop,
+      title: "Arlington Trail Loop",
+      outline:
+    {
+      color: [152,230,0,255],
+      width: 1
+    }
+      // popupTemplate: {
+      //   title: "{features.properties.name}",
+      //   content: "{expression/per_ancestry}% of the {states.POP2007} people in {states.STATE_NAME} have "
+      //     + "Norwegian ancestry.",
+      //   expressionInfos: [{
+      //     name: "per_ancestry",
+      //     expression: "Round( ( $feature['ancestry.norwegian'] / $feature['states.POP2007'] ) * 100, 1)"
+      //   }],
+      //   fieldInfos: [{
+      //     fieldName: "states.POP2007",
+      //     format: {
+      //       digitSeparator: true,
+      //       places: 0
+      //     }
+      //   }]
+      // },
+
+    });
+    map.add(runningLayer);
 
   }
 
