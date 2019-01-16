@@ -1,16 +1,15 @@
 import React from "react";
 
 const SearchForm = props => (
-  <form>
     <div className="form-group">
-      <h4>Find a Route:</h4>
+      <h4>Find an Offense:</h4>
       <input
         onChange={props.handleInputChange}
         value={props.value}
         name="search"
         type="text"
         className="form-control"
-        placeholder="Enter a Distance"
+        placeholder="Enter a Offense"
         id="search"
       />
       <br />
@@ -18,7 +17,6 @@ const SearchForm = props => (
         Search
       </button>
     </div>
-  </form>
 );
 
 export default SearchForm;

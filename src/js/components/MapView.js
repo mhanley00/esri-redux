@@ -10,6 +10,9 @@ import EsriMap from 'esri/Map';
 import arlingtonLoop from '../arlingtonLoop.json';
 import geometryEngine from 'esri/geometry/geometryEngine';
 
+// console.log(`LOOP:${arlingtonLoop}`);
+console.log(arlingtonLoop);
+let featureLayer;
 export default class Map extends Component {
   displayName: 'Map';
 
@@ -22,7 +25,7 @@ export default class Map extends Component {
       view: {},
       latitude: '',
       longitude: '',
-      definitionExpression: "offence:''"
+      // definitionExpression: "OFFENSE='THEFT'"
     };
     
   }
@@ -61,6 +64,8 @@ export default class Map extends Component {
     // });
 
     // map.add(featureLayer);
+
+    //Following this example: https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=popup-actions
     const measureThisAction = {
       title: "Measure Length",
       id: "measure-this",
@@ -72,29 +77,30 @@ export default class Map extends Component {
       actions: [measureThisAction]
     };
 
-    const featureLayer = new FeatureLayer({
+    featureLayer = new FeatureLayer({
       url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/DC_Crime_2011/FeatureServer",
       //ArcGIS REST Services Directory: https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services
       // definitionExpression: `offence:${this.state.props}` // dots do not show up when defEx is like this
-      definitionExpression: this.state.props,
+      definitionExpression: this.props.definitionExpression, 
+      //"Sci_Name = 'Ulmus pumila'"
       outFields: ["*"],
       popupTemplate: template
     });
 
-    function measureThis() {
-      let geom = view.popup.selectedFeature.geometry;
-      let distance = geometryEngine.geodesicLength(geom, "miles");
-      distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
-      view.popup.content = view.popup.selectedFeature.attributes.name +
-        "<div style='background-color:DarkGray;color:white'>" + distance +
-        " miles.</div>";
-    }
-    promise.popup.on("trigger-action", function(event) {
-      // Execute the measureThis() function if the measure-this action is clicked
-      if (event.action.id === "measure-this") {
-        measureThis();
-      }
-    });
+    // function measureThis() {
+    //   let geom = promise.popup.selectedFeature.geometry;
+    //   let distance = geometryEngine.geodesicLength(geom, "miles");
+    //   distance = parseFloat(Math.round(distance * 100) / 100).toFixed(2);
+    //   promise.popup.content = promise.popup.selectedFeature.attributes.name +
+    //     "<div style='background-color:DarkGray;color:white'>" + distance +
+    //     " miles.</div>";
+    // }
+    // promise.popup.on("trigger-action", function(event) {
+    //   // Execute the measureThis() function if the measure-this action is clicked
+    //   if (event.action.id === "measure-this") {
+    //     measureThis();
+    //   }
+    // });
 
     map.add(featureLayer);
 
@@ -129,7 +135,14 @@ export default class Map extends Component {
 
   }
 
-
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.definitionExpression !== prevProps.definitionExpression) {
+      console.log(`MapView line 138: ${this.props.definitionExpression}`);
+      featureLayer.definitionExpression = `OFFENSE='${this.props.definitionExpression}'`;
+      // this.fetchData(this.props.userID);
+    }
+  }
 
 
 
@@ -142,6 +155,7 @@ export default class Map extends Component {
   }
 
   render () {
+    console.log(this.props.definitionExpression);
     const {shareModalVisible, locateModalVisible, view} = this.state;
 
     return (
